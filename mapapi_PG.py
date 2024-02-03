@@ -1,10 +1,9 @@
 import pygame
 import requests
 import sys
-import os
 
 
-def show_map(ll_spn=None, map_type="map", add_params=None):
+def show_map(ll_spn=None, spn=None, map_type="map", add_params=None):
     if ll_spn:
         map_request = f"http://static-maps.yandex.ru/1.x/?{ll_spn}&l={map_type}"
     else:
@@ -36,9 +35,14 @@ def show_map(ll_spn=None, map_type="map", add_params=None):
     screen.blit(pygame.image.load(map_file), (0, 0))
     # Переключаем экран и ждем закрытия окна.
     pygame.display.flip()
-    while pygame.event.wait().type != pygame.QUIT:
-        pass
-
-    pygame.quit()
-    # Удаляем за собой файл с изображением.
-    os.remove(map_file)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    print(spn)
+                if event.key == pygame.K_DOWN:
+                    print(spn)
+        pygame.display.flip()
